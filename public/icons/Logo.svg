@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 118" width="650" height="118" role="img" aria-label="FARHAN.DEV Copyright">
+  <defs>
+    <style>
+      .logo {
+        font-family: 'Arial Black', 'Segoe UI Black', Impact, sans-serif;
+        font-size: 76px;
+        font-weight: 900;
+        fill: #0A0A0A;
+        letter-spacing: -1px;
+      }
+      .copyright {
+        font-family: Arial, sans-serif;
+        font-size: 36px;
+        font-weight: bold;
+        fill: #0A0A0A;
+      }
+    </style>
+  </defs>
+  
+  <text x="10" y="85" class="logo">FARHAN.DEV</text>
+  <text x="560" y="60" class="copyright">©</text>
+</svg>
