@@ -1,15 +1,18 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Funnel_Display, Archivo } from 'next/font/google';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const funnelDisplay = Funnel_Display({
   subsets: ['latin'],
+  variable: '--font-funnel', // Variabel CSS untuk Tailwind
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+// 2. Inisialisasi Archivo (jika dibutuhkan sebagai utilitas/cadangan)
+const archivo = Archivo({
   subsets: ['latin'],
+  variable: '--font-archivo',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -21,7 +24,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${funnelDisplay.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
