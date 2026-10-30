@@ -1,15 +1,14 @@
-import { cn } from '@/lib/utils';
-import Image from 'next/image';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 
 export default function Home() {
   return (
-    <div
-      className={cn(
-        'flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans'
-      )}
-    >
-      <main className={cn('font-funnel')}>Hello</main>
-      <Image src="/icons/Logo.svg" alt="Logo" width={100} height={100} />
+    <div className="w-full max-w-346.25 flex flex-col items-center border px-10">
+      <Navbar />
+      <main className="font-funnel w-full pt-27.75">
+        <div className="border size-40"></div>
+      </main>
+      <Footer />
     </div>
   );
 }

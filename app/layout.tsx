@@ -26,7 +26,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       lang="en"
       className={`${funnelDisplay.variable} ${archivo.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full w-full mx-auto flex flex-col items-center px-6">
+        {children}
+      </body>
     </html>
   );
 }
