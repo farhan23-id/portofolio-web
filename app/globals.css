@@ -19,9 +19,17 @@
   --font-archivo: var(--font-archivo), 'Helvetica Neue', Arial, sans-serif;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   background-color: var(--background);
   font-family:
     'funnelDisplay', 'funnelDisplay Fallback', 'Helvetica Neue', Arial,
     sans-serif;
+}
+html,
+body {
+  overflow-x: clip;
 }
