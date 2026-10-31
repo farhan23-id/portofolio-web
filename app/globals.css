@@ -19,10 +19,6 @@
   --font-archivo: var(--font-archivo), 'Helvetica Neue', Arial, sans-serif;
 }
 
-html {
-  scrollbar-gutter: stable;
-}
-
 body {
   background-color: var(--background);
   font-family:
@@ -32,4 +28,18 @@ body {
 html,
 body {
   overflow-x: clip;
+}
+
+@keyframes slide-in {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slide-out {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+
+@theme {
+  --animate-slide-in: slide-in 500ms ease-in-out;
+  --animate-slide-out: slide-out 500ms ease-in-out;
 }

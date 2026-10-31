@@ -1,44 +1,47 @@
 'use client';
-
+import * as Dialog from '@radix-ui/react-dialog';
 import Link from 'next/link';
 
-type ModalProps = {
-  isOpen: boolean;
-};
+const links = [
+  { label: 'Home', href: '#' },
+  { label: 'About Me', href: '#' },
+  { label: 'Projects', href: '#' },
+  { label: 'Skillsets', href: '#' },
+  { label: 'Contact Me', href: '#' },
+];
 
-function MenuOverlay({ isOpen }: Readonly<ModalProps>) {
+function MenuOverlay() {
   return (
-    <div
-      className={`fixed inset-x-0 top-27.75 bottom-0 z-40 bg-white transform transition-transform duration-500 ease-in-out
-        ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
-    >
-      <div className="mx-auto flex h-full w-full max-w-346.25 flex-col justify-between p-12">
-        {/* Spacing Atas agar menu tidak tertutup header */}
-        <div className="h-16"></div>
+    <Dialog.Portal>
+      <Dialog.Content
+        aria-describedby={undefined}
+        // Klik pada tombol toggle jangan dianggap "klik di luar"
+        onInteractOutside={(e) => {
+          if ((e.target as HTMLElement).closest('[data-menu-toggle]')) {
+            e.preventDefault();
+          }
+        }}
+        className="fixed inset-0 z-50 bg-white data-[state=open]:animate-slide-in data-[state=closed]:animate-slide-out"
+      >
+        <Dialog.Title className="sr-only">Menu</Dialog.Title>
 
-        <nav className="flex flex-col gap-6 text-5xl font-medium tracking-tight text-black md:text-7xl">
-          <Link href="#" className="hover:opacity-60 transition-opacity">
-            Home
-          </Link>
-          <Link href="#" className="hover:opacity-60 transition-opacity">
-            About Me
-          </Link>
-          <Link href="#" className="hover:opacity-60 transition-opacity">
-            Projects
-          </Link>
-          <Link href="#" className="hover:opacity-60 transition-opacity">
-            Skillsets
-          </Link>
-          <Link href="#" className="hover:opacity-60 transition-opacity">
-            Contact Me
-          </Link>
-        </nav>
+        <div className="mx-auto flex h-full w-full max-w-346.25 flex-col justify-between p-12 pt-39.75">
+          <nav className="flex flex-col gap-6 text-5xl font-medium tracking-tight text-black md:text-7xl">
+            {links.map((l) => (
+              <Dialog.Close asChild key={l.label}>
+                <Link href={l.href} className="transition-opacity hover:opacity-60">
+                  {l.label}
+                </Link>
+              </Dialog.Close>
+            ))}
+          </nav>
 
-        <div className="text-sm tracking-wider text-black border-b border-black w-max pb-1">
-          <a href="mailto:DOR@PAMIDORDESIGN.CO">FUFUFAFA@DESIGN</a>
+          <div className="w-max border-b border-black pb-1 text-sm tracking-wider text-black">
+            <a href="mailto:DOR@PAMIDORDESIGN.CO">FUFUFAFA@DESIGN</a>
+          </div>
         </div>
-      </div>
-    </div>
+      </Dialog.Content>
+    </Dialog.Portal>
   );
 }
 

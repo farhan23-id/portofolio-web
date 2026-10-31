@@ -1,70 +1,53 @@
 'use client';
+import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import MenuOverlay from '../sections/MenuOverlay';
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Kunci scroll saat menu terbuka
+  // Kunci scroll di html, karena aturan overflow di globals.css
+  // bisa membuat kunci bawaan Radix tidak berlaku
   useEffect(() => {
     const root = document.documentElement;
     root.style.overflow = isOpen ? 'hidden' : '';
-    root.style.backgroundColor = isOpen ? '#fff' : '';
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-
     return () => {
       root.style.overflow = '';
-      root.style.backgroundColor = '';
-      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
-  const toggleMenu = () => {
-    // Pastikan navbar terlihat di atas layar sebelum menu dibuka
-    if (!isOpen) window.scrollTo({ top: 0 });
-    setIsOpen(!isOpen);
+  const handleOpenChange = (open: boolean) => {
+    if (open) window.scrollTo({ top: 0 });
+    setIsOpen(open);
   };
 
   return (
-    <>
-      <div className="fixed inset-x-0 top-0 h-27.75 overflow-hidden z-49 pointer-events-none">
-        <div
-          className={`w-full h-full bg-white transform transition-transform duration-500 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
-        />
-      </div>
+    <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
+      <header className="absolute top-0 left-1/2 z-60 flex h-27.75 w-full max-w-346.25 -translate-x-1/2 items-center justify-between px-12">
+        <Link href="/" className="relative h-5 w-40">
+          <Image
+            src="/icons/Logo.svg"
+            alt="FARHAN.DEV"
+            fill
+            loading="eager"
+            className="object-contain object-left"
+          />
+        </Link>
 
-      <header className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-346.25 h-27.75 z-50 flex items-center px-12 bg-transparent">
-        <nav className="flex items-center justify-between w-full h-3">
-          <Link href="/" className="relative w-40 h-5">
-            <Image
-              src="/icons/Logo.svg"
-              alt="FARHAN.DEV"
-              fill
-              loading="eager"
-              className="object-contain object-left"
-            />
-          </Link>
-
-          <button
-            onClick={toggleMenu}
-            className="relative z-50 w-8 h-3 flex flex-col justify-between items-center group"
-            aria-label="Toggle Menu"
-          >
-            <span
-              className={`w-full h-0.5 bg-gray-600 transition-all duration-300 ease-in-out transform-gpu origin-center
-            ${isOpen ? 'absolute top-1/2 -translate-y-1/2 rotate-45' : ''}`}
-            />
-            <span
-              className={`w-full h-0.5 bg-gray-600 transition-all duration-300 ease-in-out transform-gpu origin-center
-            ${isOpen ? 'absolute top-1/2 -translate-y-1/2 -rotate-45' : ''}`}
-            />
-          </button>
-        </nav>
+        <Dialog.Trigger
+          data-menu-toggle
+          aria-label="Toggle Menu"
+          className="group pointer-events-auto relative flex h-3 w-8 flex-col items-center justify-between"
+        >
+          <span className="h-0.5 w-full origin-center bg-gray-600 transition-all duration-300 ease-in-out group-data-[state=open]:absolute group-data-[state=open]:top-1/2 group-data-[state=open]:-translate-y-1/2 group-data-[state=open]:rotate-45" />
+          <span className="h-0.5 w-full origin-center bg-gray-600 transition-all duration-300 ease-in-out group-data-[state=open]:absolute group-data-[state=open]:top-1/2 group-data-[state=open]:-translate-y-1/2 group-data-[state=open]:-rotate-45" />
+        </Dialog.Trigger>
       </header>
-      <MenuOverlay isOpen={isOpen} />
-    </>
+
+      <MenuOverlay />
+    </Dialog.Root>
   );
 }
 
