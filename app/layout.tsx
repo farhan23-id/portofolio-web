@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { Funnel_Display, Archivo } from 'next/font/google';
 import './globals.css';
+import SmoothScroll from '@/components/SmoothScroll';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 
 const funnelDisplay = Funnel_Display({
   subsets: ['latin'],
@@ -27,7 +30,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       className={`${funnelDisplay.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="min-h-full w-full mx-auto flex flex-col items-center px-6">
-        {children}
+        <Navbar />
+        <SmoothScroll>{children}</SmoothScroll>
+        <Footer />
       </body>
     </html>
   );

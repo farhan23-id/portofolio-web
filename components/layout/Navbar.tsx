@@ -4,19 +4,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import MenuOverlay from '../sections/MenuOverlay';
+import { useLenis } from 'lenis/react';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const lenis = useLenis();
 
   // Kunci scroll di html, karena aturan overflow di globals.css
-  // bisa membuat kunci bawaan Radix tidak berlaku
   useEffect(() => {
-    const root = document.documentElement;
-    root.style.overflow = isOpen ? 'hidden' : '';
-    return () => {
-      root.style.overflow = '';
-    };
-  }, [isOpen]);
+    if (isOpen) {
+      lenis?.stop();
+    } else {
+      lenis?.start();
+    }
+    return () => lenis?.start();
+  }, [isOpen, lenis]);
 
   const handleOpenChange = (open: boolean) => {
     if (open) window.scrollTo({ top: 0 });
@@ -45,7 +47,6 @@ function Navbar() {
           <span className="h-0.5 w-full origin-center bg-gray-600 transition-all duration-300 ease-in-out group-data-[state=open]:absolute group-data-[state=open]:top-1/2 group-data-[state=open]:-translate-y-1/2 group-data-[state=open]:-rotate-45" />
         </Dialog.Trigger>
       </header>
-
       <MenuOverlay />
     </Dialog.Root>
   );
